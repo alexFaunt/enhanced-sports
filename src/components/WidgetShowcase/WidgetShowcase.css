@@ -1,0 +1,10 @@
+.widget {
+  background: red;
+  position: relative;
+  transform: translate3d(0, 0, 0);
+  transition: transform 300ms ease-in-out;
+}
+
+.lifted {
+  transition: none;
+}

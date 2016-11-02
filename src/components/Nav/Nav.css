@@ -1,0 +1,9 @@
+.wrapper {
+  text-align: right;
+  height: 50px;
+  flex-shrink: 0;
+}
+
+.button {
+  padding: 10px;
+}
