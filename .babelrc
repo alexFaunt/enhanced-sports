@@ -4,16 +4,6 @@
     "stage-1"
   ],
   "plugins": [
-    [ "transform-react-jsx", { "pragma": "h" } ],
-    [
-      "module-resolver",
-      {
-        "root": ["./node_modules"],
-        "alias": {
-          "react": "preact-compat",
-          "react-dom": "preact-compat"
-        }
-      }
-    ]
+    [ "transform-react-jsx", { "pragma": "h" } ]
   ]
 }

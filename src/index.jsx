@@ -7,11 +7,12 @@ import App from './components/App/App'
 
 const state = window.__INITIAL_STATE__ // eslint-disable-line
 const store = configureStore(state)
+const root = document.getElementById('app')
 
 render((
-  <BrowserRouter>
+  <BrowserRouter context={ { test: 'lol' } }>
     <Provider store={ store }>
       <App />
     </Provider>
   </BrowserRouter>
-), document.getElementById('app'))
+), root, root.lastElementChild)

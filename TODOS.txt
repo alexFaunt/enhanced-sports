@@ -1,7 +1,0 @@
-// Preact-compat is not working server side
-// It works when i import it, but when react-router imports it, it's ignored.
-// see .babelrc for the shim. It works with webpack on front end so might be okay.
-
-// CSS doesn't work server side - trying to use webpack laoders with babel to make it load.
-
-// Post css doesnt WORK
