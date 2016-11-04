@@ -12,8 +12,9 @@ module.exports = {
     ]
   },
   output: {
-    filename: './build/[name].js',
-    path: path.resolve(__dirname, '..')
+    filename: './[name].js',
+    path: '/',
+    publicPath: '/public/generated/'
   },
   resolve: Object.assign({}, common.resolve, {
     alias: {

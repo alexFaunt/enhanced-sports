@@ -1,12 +1,15 @@
 // This config is used by server side render to load CSS modules
-
 const common = require('./common.config')
 const path = require('path')
+const SuppressOutputPlugin = require('./plugins/SuppressOutputPlugin')
 
 module.exports = Object.assign({}, common, {
   target: 'node',
-  output: { // TODO - don't really care what is output - sooner it doesnt -- maybe when moving to isomorphic it wont
+  output: {
     path: path.resolve(__dirname, '../trash/'),
-    libraryTarget: 'commonjs2' // Has to be set to this for node
-  }
+    libraryTarget: 'commonjs2' // Has to be set to this
+  },
+  plugins: [
+    new SuppressOutputPlugin({ asset: 'main' }) // Suppress the generated css file
+  ].concat(common.plugins) // I think order here is important
 })
