@@ -15,7 +15,7 @@ require('babel-register')({
 require('babel-polyfill')
 
 // Alias react to preact-compat
-require('./src/lib/npm-alias')()
+require('module-alias/register')
 
 const path = require('path')
 
@@ -41,7 +41,12 @@ if (process.env.NODE_ENV !== 'production') {
     // Kill the server and when complete restart it.
     server.close(() => {
       console.log('App restarting...')
-      server = startApp()
+      try {
+        server = startApp()
+      }
+      catch (error) {
+        console.error(error)
+      }
     })
   }
 

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=production npm run server",
-    "dev": "concurrently --kill-others \"npm run server\" \"npm run dev-server\"",
+    "dev": "concurrently \"npm run server\" \"npm run dev-server\"",
     "server": "node -r dotenv/config .",
     "dev-server": "webpack-dev-server --config ./webpack/dev.config.js",
     "lint": "eslint ./src/**/*.js*",
@@ -30,6 +30,7 @@
     "koa-route": "^2.4.2",
     "koa-static-cache": "^3.1.7",
     "koa-webpack-dev-middleware": "^1.2.2",
+    "module-alias": "^2.0.0",
     "postcss-calc": "^5.3.1",
     "postcss-inline-comment": "^3.0.0",
     "postcss-nested": "^1.0.0",
