@@ -7,7 +7,7 @@ const postcssInlineComment = require('postcss-inline-comment')
 const postcssCalc = require('postcss-calc')
 const postcssNested = require('postcss-nested')
 
-const extractCSS = new ExtractTextPlugin({ filename: './[name].css', allChunks: true })
+const extractCSS = new ExtractTextPlugin({ filename: '[name].css', allChunks: true })
 
 module.exports = {
   plugins: [

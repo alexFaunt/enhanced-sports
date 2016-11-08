@@ -1,25 +1,23 @@
 import { h } from 'preact'
 import { Match, Miss } from 'react-router'
-import { connect } from 'preact-redux'
 
 import Nav from '../Nav/Nav'
-import Main from '../Main/Main'
-import WidgetMenu from '../WidgetMenu/WidgetMenu'
-import Error from '../Error/Error'
-import RouterMiss from '../RouterMiss/RouterMiss'
+import Home from '../Home/Home'
+import NotFound from '../NotFound/NotFound'
+import Route from '../Route/Route'
+import RedirectPage from '../RedirectPage/RedirectPage'
 
 import styles from './App.css'
 
-const mapStateToProps = ({ errors }) => ({ globalError: errors.global })
-
-export default connect(mapStateToProps)(({ globalError }) => (
+export default () => (
   <div className={ styles.app }>
     <Nav />
-    { !globalError && <Main /> }
-    <Match pattern="/" exactly component={ () => null /* TODO hemlet */ } />
-    <Match pattern="/menu/add" component={ WidgetMenu } />
+    <main className={ styles.main }>
+      <Match pattern="/" exactly component={ Home } />
+      <Match pattern="/route" exactly component={ Route } />
+      <Match pattern="/redirect" exactly component={ RedirectPage } />
 
-    <Miss component={ RouterMiss } />
-    <Error error={ globalError } />
+      <Miss component={ NotFound } />
+    </main>
   </div>
-))
+)

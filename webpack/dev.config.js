@@ -1,40 +1,20 @@
-const webpack = require('webpack')
 const path = require('path')
-const common = require('./common.config')
+const client = require('./client.config')
+const env = require('./env')
 
-module.exports = {
-  target: 'web',
-  devtool: 'eval-source-maps',
-  context: path.resolve(__dirname, '..'),
-  entry: {
-    bundle: [
-      './src/index.jsx'
-    ]
-  },
+module.exports = Object.assign({}, client, {
   output: {
-    filename: './[name].js',
+    filename: '[name].js',
     path: '/',
-    publicPath: '/public/generated/'
+    publicPath: '/generated/'
   },
-  resolve: Object.assign({}, common.resolve, {
-    alias: {
-      react: 'preact-compat',
-      'react-dom': 'preact-compat'
-    }
-  }),
-  plugins: common.plugins.concat([
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-    })
-  ]),
-
-  module: {
-    loaders: common.module.loaders.concat([
-      {
-        test: /\.(jsx|js)$/,
-        loader: 'babel-loader',
-        exclude: [/node_modules/]
+  devServer: {
+    stats: { colors: true, progress: true, chunks: false },
+    proxy: {
+      '/': {
+        target: `http://localhost:${env.PORT}`, // TODO different hosts?
+        secure: false
       }
-    ])
+    }
   }
-}
+})

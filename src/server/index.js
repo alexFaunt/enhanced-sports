@@ -1,32 +1,20 @@
 /* eslint-disable global-require */
-import express from 'express'
+import koa from 'koa'
+import route from 'koa-route'
 import path from 'path'
-import mustacheExpress from 'mustache-express'
+import staticCache from 'koa-static-cache'
 import renderer from './renderer'
 
-// Register '.mustache' extension with The Mustache Express
-const server = express()
+const isDev = process.env.NODE_ENV === 'production'
 
-// Proxy through to dev server
-if (process.env.NODE_ENV !== 'production') {
-  const webpackDevMiddleware = require('webpack-dev-middleware')
-  const webpack = require('webpack')
-  const config = require('../../webpack/dev.config.js')
+const app = koa()
 
-  server.use(webpackDevMiddleware(webpack(config), {
-    publicPath: config.output.publicPath,
-    stats: { colors: true, chunks: false }
-  }))
-}
-
-server.use('/public', express.static(path.join(__dirname, '../../public')))
-
-server.get('*', renderer)
-
-server.engine('html', mustacheExpress())
-server.set('view engine', 'html')
-server.set('views', path.resolve(__dirname, './views'))
-
-server.listen(process.env.PORT || 3000, () => {
-  console.log(`App listening on port ${process.env.PORT || 3000}!`)
+app.use(staticCache(path.join(__dirname, '../../public')), {
+  buffer: !isDev,
+  maxAge: isDev ? 60 * 60 * 24 : 0,
+  gzip: true
 })
+
+app.use(route.get('*', renderer))
+
+export default app

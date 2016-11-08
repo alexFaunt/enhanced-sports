@@ -1,61 +1,52 @@
-/* eslint-disable global-require, import/newline-after-import */
+/* eslint-disable global-require, import/newline-after-import, no-console */
 
-// Extra config on top of babelrc to make the server load CSS files.
+// Extra config on top of babelrc to make the app load CSS files as modules
 require('babel-register')({
   plugins: [
     [
       'babel-plugin-webpack-loaders',
       {
-        config: './webpack/node.config.js',
+        config: './webpack/server.config.js',
         verbose: false
       }
     ]
   ]
 })
+require('babel-polyfill')
 
 // Alias react to preact-compat
 require('./src/lib/npm-alias')()
 
-require('./src/server')
+const path = require('path')
 
-// const getServer = () => require('./src/server').default
-//
-// // Start the server
-// const start = (server) => {
-//   server.listen(process.env.PORT || 3000, (error) => {
-//     if (error) console.error(error)
-//     else console.log(`App listening on port ${process.env.PORT || 3000}!`)
-//   })
-// }
-//
-// start(getServer())
-//
-// if (process.env.NODE_ENV !== 'production') {
-//   const path = require('path')
-//
-//   // Env variables for reloading
-//   const envPath = path.join(__dirname, '/.env')
-//
-//   const serverDelete = (server) => {
-//     Object.keys(require.cache)
-//       .forEach((id) => id.includes('/src/') && delete require.cache[id])
-//
-//     server.on('close', (err) => {
-//       if (err) console.error(err) // TODO logger
-//
-//       process.env = {}
-//       require('dotenv').config({ path: envPath })
-//
-//       start(getServer())
-//     })
-//
-//     server.close()
-//   }
-//
-//   const chokidar = require('chokidar')
-//   const watcher = chokidar.watch([path.join(__dirname, './src/'), envPath])
-//
-//   watcher.on('ready', () => {
-//     watcher.on('change', () => serverDelete(getServer()))
-//   })
-// }
+const getApp = () => require('./src/server').default
+const startApp = () => getApp().listen(process.env.PORT || 3000, (error) => {
+  if (error) console.error(error)
+  else console.log('App started!')
+})
+
+// start the app!
+let server = startApp()
+
+// In dev mode we need to destroy the cache and restart the server if there are file changes
+// Or server side render will be wrong.
+if (process.env.NODE_ENV !== 'production') {
+  const appDelete = () => {
+    // delete everything from the require cache
+    Object.keys(require.cache)
+      .forEach((id) => {
+        if (!id.includes('node_modules')) delete require.cache[id]
+      })
+
+    // Kill the server and when complete restart it.
+    server.close(() => {
+      console.log('App restarting...')
+      server = startApp()
+    })
+  }
+
+  // Watching file system with chokidar
+  const chokidar = require('chokidar')
+  const watcher = chokidar.watch(path.join(__dirname, './src/'))
+  watcher.on('ready', () => watcher.on('change', () => appDelete()))
+}

@@ -3,6 +3,6 @@
   flex-grow: 1;
 }
 
-.widget {
-  position: absolute;
+.item {
+  background: red;
 }

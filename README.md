@@ -7,7 +7,7 @@ react-router 4
 css modules
 babel
 webpack
-
+koa
 
 ## Notes
 Using aliasing to set react to preact-compat on node rather than webpack the server
@@ -18,15 +18,19 @@ To get css modules importing on server side need to use webpack loaders for node
 
 
 ## TODOS
-Double render when hitting client - don't knwo why, mgiht be my global error action, or might be react-router doing it twice
+Double render when hitting client - don't know why, might be my global error action, or might be react-router doing it twice
 
-Post css doesnt WORK because of webpack apparently.
+Post css doesnt WORK because of webpack apparently.???
 
-Try out jest
+Add jest tests
 
-Reloading when changes in dev
-
-prod build
+minify CSS in prod
 minify HTML in prod
 
-Env file doesn't get picked up fix scripts -r dotenv/config
+Maybe sagas?
+
+Dont let everything die if the bundle fails
+
+Webpack tree shaking
+
+History in index.jsx?!!? do i need it?!!
