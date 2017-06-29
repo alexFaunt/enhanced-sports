@@ -9,9 +9,8 @@ const state = window.__INITIAL_STATE__ // eslint-disable-line
 const store = configureStore(state)
 const root = document.getElementById('app')
 
-//  TODO History? history={history}
 render((
-  <BrowserRouter context={ { test: 'lol' } }>
+  <BrowserRouter>
     <Provider store={ store }>
       <App />
     </Provider>

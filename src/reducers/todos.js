@@ -1,4 +1,4 @@
-import { compose, omit, without } from 'ramda'
+import { omit } from '../lib/utils'
 import createReducer from '../utils/create-reducer'
 import { ADD_TODO, REMOVE_TODO } from '../actions/todoActions'
 

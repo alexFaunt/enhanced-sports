@@ -21,6 +21,7 @@ To get css modules importing on server side need to use webpack loaders for node
 Bug where dom order is not respected
 
 Post css doesnt WORK because of webpack apparently.???
+Does it update on css changes?
 
 minify CSS in prod
 minify HTML in prod

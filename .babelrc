@@ -1,9 +1,14 @@
 {
   "presets": [
-    "es2015",
-    "stage-1"
+    [
+      "latest", {
+        "modules": false
+      }
+    ]
   ],
   "plugins": [
+    "transform-class-properties",
+    "transform-object-rest-spread",
     [ "transform-react-jsx", { "pragma": "h" } ]
   ]
 }

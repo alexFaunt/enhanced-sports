@@ -1,14 +1,10 @@
 const webpack = require('webpack')
 const path = require('path')
-const fs = require('fs')
 const common = require('./common.config')
-
-const envFile = new Buffer(fs.readFileSync(path.resolve(__dirname, '../.env'), 'utf8'))
-const env = require('dotenv').parse(envFile)
+const env = require('./env')
 
 module.exports = {
   target: 'web',
-  devtool: 'eval-source-maps',
   context: path.resolve(__dirname, '..'),
   entry: {
     bundle: [
@@ -31,7 +27,8 @@ module.exports = {
       {
         test: /\.(jsx|js)$/,
         loader: 'babel-loader',
-        exclude: [/node_modules/]
+        // exclude: [/node_modules/],
+        include: [path.resolve(__dirname, '../src'), path.resolve(__dirname, '../node_modules/preact-compat')]
       }
     ])
   }

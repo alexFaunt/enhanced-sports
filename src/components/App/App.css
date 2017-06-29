@@ -5,10 +5,21 @@
 }
 
 .app {
-  background: red;
   position: relative;
   height: 100%;
-  background: #ddd;
   display: flex;
   flex-direction: column;
+}
+
+.nav {
+  height: 50px;
+  flex-shrink: 0;
+}
+
+.main {
+  flex-grow: 1;
+}
+
+.link {
+  display: block;
 }

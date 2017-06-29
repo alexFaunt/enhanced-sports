@@ -3,6 +3,7 @@ const client = require('./client.config')
 const env = require('./env')
 
 module.exports = Object.assign({}, client, {
+  devtool: 'eval-source-maps',
   output: {
     filename: '[name].js',
     path: '/',

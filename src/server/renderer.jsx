@@ -37,7 +37,8 @@ export default function* () { // eslint-disable-line require-yield
   const context = createServerRenderContext()
 
   // render the first time
-  const markup = renderApp(context, store, location)
+  // Would be better if we didn't render this twice, instead the first pass is just the routes
+  renderApp(context, store, location)
 
   // get the result
   const { redirect, missed } = context.getResult()
@@ -56,8 +57,16 @@ export default function* () { // eslint-disable-line require-yield
   // this time (on the client they know from componentDidMount)
   if (missed) this.response.status = 404
 
+  // console.log(store.getState().profiles)
+  // Promise.all(store.getState().promises).then(() => {
+  //   console.log('RESOLVED')
+  //   console.log(store.getState().profiles)
+  //   console.log(renderApp(context, store, location))
+  // })
+  // store.dispatch({ type: 'PROFILE_LOADED', profile: { name: 'jeff', id: 'test2' } })
+
   this.body = renderHtml({
-    markup: missed ? renderApp(context, store, location) : markup,
-    initialState: JSON.stringify(store.getState())
+    markup: renderApp(context, store, location),
+    initialState: JSON.stringify({ ...store.getState(), promises: null })
   })
 }

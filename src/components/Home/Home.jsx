@@ -5,7 +5,11 @@ import styles from './Home.css'
 
 export default () => (
   <section className={ styles.wrapper }>
-    <TodoList />
-    <AddTodo />
+    <div>
+      <TodoList key="1" />
+    </div>
+    <div>
+      <AddTodo key="2" />
+    </div>
   </section>
 )
